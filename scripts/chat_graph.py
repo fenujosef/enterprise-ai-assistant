@@ -4,6 +4,9 @@ def main():
 
     print("\nEnterprise AI Assistant\n")
 
+    # Conversation history lives for the duration of this chat session
+    history = []
+
     while True:
         question = input("You: ")
 
@@ -13,10 +16,17 @@ def main():
         result = graph.invoke(
             {
                 "question": question,
+                "rewritten_question": "",
                 "context": "",
-                "answer": ""
+                "answer": "",
+                "retrieval_attempts": 0,
+                "chat_history": history
             }
         )
+
+        # Save the updated history for the next turn
+        history = result["chat_history"]
+
 
         print("\nRewritten Question:")
         print(result["rewritten_question"])

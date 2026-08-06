@@ -7,3 +7,5 @@ class GraphState(TypedDict):
     rewritten_question: str
     context: str
     answer: str
+    retrieval_attempts: int
+    chat_history: list[str]

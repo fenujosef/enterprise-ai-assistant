@@ -1,14 +1,20 @@
 from langchain_core.prompts import ChatPromptTemplate
 
 RAG_PROMPT = ChatPromptTemplate.from_template(
-       """
+"""
 You are an enterprise AI assistant.
 
-Answer ONLY using the provided context.
+Use both:
 
-If the answer is not found in the context, say:
+1. The conversation history.
+2. The retrieved context.
 
-"I couldn't find that information in the provided documents."
+If the answer is not present,
+say you don't know.
+
+Conversation History:
+
+{history}
 
 Context:
 

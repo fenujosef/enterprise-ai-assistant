@@ -10,6 +10,7 @@ def generate(state: GraphState) -> GraphState:
 
     prompt = RAG_PROMPT.invoke(
         {
+            "history": "\n".join(state["chat_history"]),
             "question": state["question"],
             "context": state["context"]
         }
@@ -18,5 +19,8 @@ def generate(state: GraphState) -> GraphState:
     response = llm.invoke(prompt)
 
     state["answer"] = response.content
+
+    state["chat_history"].append(f"User: {state['question']}")
+    state["chat_history"].append(f"Assistant: {response.content}")
 
     return state
