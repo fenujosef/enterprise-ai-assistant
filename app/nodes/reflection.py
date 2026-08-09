@@ -24,6 +24,7 @@ def reflection(state: GraphState) -> GraphState:
     decision = ReflectionDecision.model_validate(data)
 
     state["reflection"] = decision.reason
+    state["reflection_action"] = decision.action
 
     if decision.action == "retry":
         state["retry_count"] += 1

@@ -30,10 +30,14 @@ def route_after_execution(state):
 
 def route_after_reflection(state):
 
-    if state["retry_count"] < 2:
-        if "failed" in state["reflection"].lowe():
-            return "retry"
+    action = state["reflection_action"]
 
+    if action == "replan":
+        return "replan"
+
+    if action == "retry" and state["retry_count"] < 2:
+        return "retry"
+    
     return "finish"
 
 
@@ -54,7 +58,7 @@ graph_builder.add_conditional_edges("agent", route_after_agent, {"tool": "tool_e
 graph_builder.add_edge("tool_executor", "generate")
 graph_builder.add_edge("planner", "plan_executor")
 graph_builder.add_conditional_edges("plan_executor",route_after_execution,{"continue": "plan_executor", "done": "reflection",})
-graph_builder.add_conditional_edges("reflection", route_after_reflection, {"retry": "plan_executor", "finish": "generate"})
+graph_builder.add_conditional_edges("reflection", route_after_reflection, {"retry": "plan_executor", "replan": "planner", "finish": "generate"})
 graph_builder.add_edge("rewrite", "retrieve")
 graph_builder.add_edge("retrieve", "generate")
 graph_builder.add_edge("generate", END)

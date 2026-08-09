@@ -17,4 +17,6 @@ class GraphState(TypedDict):
     current_step: int
     step_results: list[dict]
     reflection: str
+    reflection_action: str
     retry_count: int
+    
