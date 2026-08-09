@@ -12,7 +12,8 @@ def generate(state: GraphState) -> GraphState:
         {
             "history": "\n".join(state["chat_history"]),
             "question": state["question"],
-            "context": state["context"]
+            "context": state["context"],
+            "tool_output":state["tool_output"]
         }
     )
 

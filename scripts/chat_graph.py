@@ -20,7 +20,16 @@ def main():
                 "context": "",
                 "answer": "",
                 "retrieval_attempts": 0,
-                "chat_history": history
+                "chat_history": history,
+
+                "action": "",
+                "tool_name": "",
+                "tool_input": "",
+                "tool_output": "",
+
+                "plan": {"steps": []},
+                "current_step": 0,
+                "step_results": [],
             }
         )
 
@@ -33,6 +42,10 @@ def main():
 
         print("\nAssistant:\n")
         print(result["answer"])
+
+        print("\nTool Selected:")
+        print(result["tool_name"])
+
         print()
 
 if __name__ == "__main__":

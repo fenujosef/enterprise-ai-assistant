@@ -12,9 +12,15 @@ Use both:
 If the answer is not present,
 say you don't know.
 
+Talk usually if it is a greeting or small talk.
+
 Conversation History:
 
 {history}
+
+Tool Output:
+
+{tool_output}
 
 Context:
 

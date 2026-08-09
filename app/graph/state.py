@@ -9,3 +9,10 @@ class GraphState(TypedDict):
     answer: str
     retrieval_attempts: int
     chat_history: list[str]
+    tool_name: str
+    tool_input: str
+    tool_output: str
+    plan: list[dict]
+    action: str
+    current_step: int
+    step_results: list[dict]
