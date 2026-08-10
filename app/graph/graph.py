@@ -8,6 +8,7 @@ from app.nodes.planner import planner
 from app.nodes.plan_executor import plan_executor
 from app.nodes.tool_executor import tool_executor
 from app.nodes.reflection import reflection
+from app.nodes.tool_discovery import tool_discovery
 
 
 def route_after_agent(state):
@@ -52,8 +53,10 @@ graph_builder.add_node("planner", planner)
 graph_builder.add_node("plan_executor", plan_executor)
 graph_builder.add_node("tool_executor", tool_executor)
 graph_builder.add_node("reflection", reflection)
+graph_builder.add_node("tool_discovery", tool_discovery)
 
-graph_builder.add_edge(START, "agent")
+graph_builder.add_edge(START, "tool_discovery")
+graph_builder.add_edge("tool_discovery", "agent")
 graph_builder.add_conditional_edges("agent", route_after_agent, {"tool": "tool_executor","plan": "planner", "rewrite":"rewrite"})
 graph_builder.add_edge("tool_executor", "generate")
 graph_builder.add_edge("planner", "plan_executor")

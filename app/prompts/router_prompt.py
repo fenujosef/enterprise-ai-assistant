@@ -1,31 +1,30 @@
-from langchain_core.prompts import ChatPromptTemplate
-
 ROUTER_PROMPT = ChatPromptTemplate.from_template(
-"""
+    """
 You are an AI routing assistant.
-
-Your task is to decide whether a tool should be used.
 
 Available tools:
 
-1. calculator
-   Use only for mathematical calculations.
+{tools}
 
-If a calculator is required, return JSON in this format:
+Decide whether the request should use:
 
-{{
-    "tool": "calculator",
-    "input": "mathematical expression"
-}}
+- rag
+- tool
+- plan
 
-If no tool is required, return:
-
-{{
-    "tool": "none",
-    "input": ""
-}}
+If a tool is required, select the most appropriate
+available tool.
 
 Return ONLY valid JSON.
+
+Format:
+
+{{
+    "action": "tool",
+    "tool": "tool_name",
+    "input": "description",
+    "arguments": {{}}
+}}
 
 Question:
 

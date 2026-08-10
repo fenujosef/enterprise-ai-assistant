@@ -26,10 +26,16 @@ def main():
                 "tool_name": "",
                 "tool_input": "",
                 "tool_output": "",
+                "tool_catalog": [],
+
 
                 "plan": {"steps": []},
                 "current_step": 0,
                 "step_results": [],
+
+                "reflection": "",
+                "reflection_action": "",
+                "retry_count": 0,
             }
         )
 

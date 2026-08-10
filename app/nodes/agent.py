@@ -9,13 +9,15 @@ from app.prompts.router_prompt import ROUTER_PROMPT
 
 llm = get_llm()
 
+tools = state["tool_catalog"]
 
 def agent(state: GraphState) -> GraphState:
     """Decide whether a tool should be used."""
 
     prompt = ROUTER_PROMPT.invoke(
         {
-            "question": state["question"]
+            "question": state["question"],
+            "tools": str(tools),
         }
     )
 
@@ -28,5 +30,6 @@ def agent(state: GraphState) -> GraphState:
     state["action"] = decision.action
     state["tool_name"] = decision.tool
     state["tool_input"] = decision.input
+    state["tool_arguments"] = decision.arguments
 
     return state
