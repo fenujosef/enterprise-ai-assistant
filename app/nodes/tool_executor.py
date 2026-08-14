@@ -1,9 +1,11 @@
 from app.graph.state import GraphState
 from app.tools.registry import TOOLS
-from app.mcp.tool_executor import execute_mcp_tool
+from app.mcp.client import call_mcp_tool
+#from app.mcp.tool_executor import execute_mcp_tool
+from app.mcp.utils import extract_text
 
 
-def tool_executor(state: GraphState) -> GraphState:
+async def tool_executor(state: GraphState) -> GraphState:
 
     tool_name = state["tool_name"]
 
@@ -13,18 +15,34 @@ def tool_executor(state: GraphState) -> GraphState:
             state["tool_input"]
         )
 
-    elif tool_name.startswith("mcp."):
+    # elif tool_name.startswith("mcp."):
 
-        mcp_tool_name = tool_name.removeprefix("mcp.")
+    #     parts = tool_name.split(".")
 
-        result = execute_mcp_tool(
-            mcp_tool_name,
-            state["tool_arguments"],
-        )
+    #     if len(parts) != 3:
+    #         raise ValueError(
+    #             f"Invalid MCP tool name: {tool_name}"
+    #         )
+
+    #     _, server_name, mcp_tool_name = parts
+
+    #     result = await call_mcp_tool(
+    #         server_name,
+    #         mcp_tool_name,
+    #         state["tool_arguments"],
+    #     )
+
+    #    
 
     else:
 
-        result = f"Tool '{tool_name}' not found."
+        result = await call_mcp_tool(
+            tool_name,
+            state["tool_arguments"],
+        )
+
+        result = extract_text(result)
+
 
     state["tool_output"] = result
 

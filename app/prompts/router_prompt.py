@@ -1,3 +1,6 @@
+from langchain_core.prompts import ChatPromptTemplate
+
+
 ROUTER_PROMPT = ChatPromptTemplate.from_template(
     """
 You are an AI routing assistant.
@@ -6,25 +9,16 @@ Available tools:
 
 {tools}
 
-Decide whether the request should use:
+Determine the appropriate action for the user's question.
 
-- rag
-- tool
-- plan
+Possible actions:
 
-If a tool is required, select the most appropriate
-available tool.
+- rag: Use the knowledge base to answer the question.
+- tool: Use one of the available tools.
+- plan: Use when the task requires multiple steps or multiple tool calls.
 
-Return ONLY valid JSON.
-
-Format:
-
-{{
-    "action": "tool",
-    "tool": "tool_name",
-    "input": "description",
-    "arguments": {{}}
-}}
+If the action is "tool", select the most appropriate
+tool from the available tools and provide the required arguments.
 
 Question:
 

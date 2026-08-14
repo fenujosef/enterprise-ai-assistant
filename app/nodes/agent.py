@@ -8,11 +8,13 @@ from app.prompts.router_prompt import ROUTER_PROMPT
 
 
 llm = get_llm()
+structured_llm = llm.with_structured_output(RouterDecision)
 
-tools = state["tool_catalog"]
 
 def agent(state: GraphState) -> GraphState:
     """Decide whether a tool should be used."""
+
+    tools = state["tool_catalog"]
 
     prompt = ROUTER_PROMPT.invoke(
         {
@@ -21,11 +23,12 @@ def agent(state: GraphState) -> GraphState:
         }
     )
 
-    response = llm.invoke(prompt)
+    # response = llm.invoke(prompt)
 
-    data = json.loads(response.content)
+    # data = json.loads(response.content)
 
-    decision = RouterDecision.model_validate(data)
+    # decision = RouterDecision.model_validate(data)
+    decision = structured_llm.invoke(prompt)
 
     state["action"] = decision.action
     state["tool_name"] = decision.tool

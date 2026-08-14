@@ -43,8 +43,8 @@ A step may use the result of a previous step.
 
 When needed, reference a previous result using:
 
-{step_1_result}
-{step_2_result}
+step_1_result
+step_2_result
 etc.
 
 Example:
@@ -56,7 +56,7 @@ Step 2:
 Send this repository information to Slack.
 
 Step 2 input:
-{step_1_result}
+step_1_result
 
 Question:
 

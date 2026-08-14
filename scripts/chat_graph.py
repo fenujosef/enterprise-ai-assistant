@@ -1,58 +1,71 @@
+import asyncio
+
 from app.graph.graph import graph
+from app.mcp.client import initialize_mcp, close_mcp
 
-def main():
+async def main():
 
-    print("\nEnterprise AI Assistant\n")
+    await initialize_mcp()
 
-    # Conversation history lives for the duration of this chat session
-    history = []
+    try:
 
-    while True:
-        question = input("You: ")
+        print("\nEnterprise AI Assistant\n")
 
-        if question.lower() in ["exit", "quit"]:
-            break
+        # Conversation history lives for the duration of this chat session
+        history = []
 
-        result = graph.invoke(
-            {
-                "question": question,
-                "rewritten_question": "",
-                "context": "",
-                "answer": "",
-                "retrieval_attempts": 0,
-                "chat_history": history,
+        while True:
+            question = input("You: ")
 
-                "action": "",
-                "tool_name": "",
-                "tool_input": "",
-                "tool_output": "",
-                "tool_catalog": [],
+            if question.lower() in ["exit", "quit"]:
+                break
 
+            result = await graph.ainvoke(
+                {
+                    "question": question,
+                    "rewritten_question": "",
+                    "context": "",
+                    "answer": "",
+                    "retrieval_attempts": 0,
+                    "chat_history": [],
 
-                "plan": {"steps": []},
-                "current_step": 0,
-                "step_results": [],
+                    "action": "",
+                    "tool_name": "",
+                    "tool_input": "",
+                    "tool_arguments": {},
+                    "tool_output": "",
 
-                "reflection": "",
-                "reflection_action": "",
-                "retry_count": 0,
-            }
-        )
-
-        # Save the updated history for the next turn
-        history = result["chat_history"]
+                    "tool_catalog": [],
 
 
-        print("\nRewritten Question:")
-        print(result["rewritten_question"])
+                    "plan": {"steps": []},
+                    "current_step": 0,
+                    "step_results": [],
 
-        print("\nAssistant:\n")
-        print(result["answer"])
+                    "reflection": "",
+                    "reflection_action": "",
+                    "retry_count": 0,
+                }
+            )
 
-        print("\nTool Selected:")
-        print(result["tool_name"])
+            # Save the updated history for the next turn
+            #history = result["chat_history"]
 
-        print()
+
+            print("\nRewritten Question:")
+            print(result["rewritten_question"])
+
+            print("\nAssistant:\n")
+            print(result["answer"])
+
+            print("\nTool Selected:")
+            print(result["tool_name"])
+
+            print()
+
+    finally:
+
+        await close_mcp()
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

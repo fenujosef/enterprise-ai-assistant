@@ -1,0 +1,38 @@
+[
+  {
+    "question": "How many vacation days are available for employees with 0 to 5 years of service?",
+    "expected_answer": "Employees receive a maximum of 10 vacation days per year.",
+    "actual_answer": "According to the context, for employees with 0 to 5 years of service, they accrue 3.077 hours biweekly, for a maximum of 10 days per year. \n\nSo, the answer is 10 days.",
+    "category": "rag",
+    "latency_seconds": 2.474,
+    "exact_match": false,
+    "contains_expected": false
+  },
+  {
+    "question": "How many vacation days are available for employees with 6 to 10 years of service?",
+    "expected_answer": "Employees receive a maximum of 15 vacation days per year.",
+    "actual_answer": "According to the context, employees with 6 to 10 years of service accrue 4.62 hours biweekly, for a maximum of 15 days per year. \n\nSo, the answer is 15 days.",
+    "category": "rag",
+    "latency_seconds": 1.485,
+    "exact_match": false,
+    "contains_expected": false
+  },
+  {
+    "question": "What is the vacation accrual rate for employees with 11 or more years of service?",
+    "expected_answer": "Employees accrue 6.15 hours biweekly, with a maximum of 20 days per year.",
+    "actual_answer": "The vacation accrual rate for employees with 11 or more years of service is 6.15 hours biweekly, for a maximum of 20 days per year.",
+    "category": "rag",
+    "latency_seconds": 1.693,
+    "exact_match": false,
+    "contains_expected": false
+  },
+  {
+    "question": "What is 25 * 18?",
+    "expected_answer": "450",
+    "actual_answer": "To find the answer, I'll multiply 25 by 18. \n\n25 * 18 = 450\n\nSo, the answer is indeed 450.",
+    "category": "tool",
+    "latency_seconds": 0.481,
+    "exact_match": false,
+    "contains_expected": true
+  }
+]

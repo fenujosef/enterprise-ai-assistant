@@ -4,7 +4,7 @@ from app.tools.registry import TOOLS
 from app.mcp.client import list_mcp_tools
 
 
-def get_tool_catalog() -> list[dict]:
+async def get_tool_catalog() -> list[dict]:
 
     catalog = []
 
@@ -19,17 +19,15 @@ def get_tool_catalog() -> list[dict]:
         )
 
     #MCP tools
-    mcp_tools = asyncio.run(
-        list_mcp_tools()
-    )
+    mcp_tools = await list_mcp_tools()
 
-    for tool in mcp_tools:
+    for name, tool in mcp_tools.items():
         catalog.append(
             {
-                "name": f"mcp.{tool.name}",
+                "name": name,
                 "source": "mcp",
                 "description": tool.description or "",
-                "input_schema": tool.inputSchema,
+                "input_schema": tool.input_schema,
             }
         )
 
