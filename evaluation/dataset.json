@@ -12,11 +12,38 @@
   {
     "question": "What is the vacation accrual rate for employees with 11 or more years of service?",
     "expected_answer": "Employees accrue 6.15 hours biweekly, with a maximum of 20 days per year.",
-    "category": "rag"
+    "category": "rag",
+    "expected_action": "tool"
   },
   {
     "question": "What is 25 * 18?",
     "expected_answer": "450",
-    "category": "tool"
+    "category": "tool",
+    "expected_action": "tool"
+  },
+  {
+  "question": "How many vacation days are available for employees with 6 to 10 years of service?",
+  "expected_answer": "Employees receive a maximum of 15 vacation days per year.",
+  "category": "rag",
+  "expected_keywords": [
+    "15",
+    "vacation",
+    "6",
+    "10"
+  ],
+  "expected_action": "tool"
+  },
+  {
+  "question": "What is the vacation accrual rate for employees with 11 or more years of service?",
+  "expected_answer": "Employees accrue 6.15 hours biweekly, with a maximum of 20 days per year.",
+  "category": "rag",
+  "expected_keywords": [
+    "6.15",
+    "hours",
+    "biweekly",
+    "20",
+    "days"
+  ],
+  "expected_action": "tool"
   }
 ]

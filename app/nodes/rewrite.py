@@ -1,7 +1,10 @@
 from app.graph.state import GraphState
 from app.llm.groq_client import get_llm
 from app.prompts.rewrite_prompt import REWRITE_PROMPT
+from app.observability.logger import observe_node
 
+
+@observe_node("rewrite")
 def rewrite(state: GraphState) -> GraphState:
     """Rewrite the user's question for better retrieval."""
 

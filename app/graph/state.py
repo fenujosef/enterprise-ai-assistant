@@ -4,6 +4,7 @@ class GraphState(TypedDict):
     """Shared state passed between LangGraph nodes."""
 
     question: str
+    request_id: str
     rewritten_question: str
     context: str
     answer: str
@@ -21,5 +22,6 @@ class GraphState(TypedDict):
     reflection: str
     reflection_action: str
     retry_count: int
+    replan_count: int
     
     

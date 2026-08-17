@@ -31,6 +31,11 @@ class MCPServerManager:
         tool_name: str,
         arguments: dict,
     ):
+        available_tools = self.group.tools
+
+        if tool_name not in available_tools:
+            return f"Tool '{tool_name}' is not available."
+        
         return await self.group.call_tool(
             tool_name,
             arguments=arguments,

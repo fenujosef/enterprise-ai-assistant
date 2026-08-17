@@ -3,11 +3,13 @@ from app.graph.graph import graph
 
 class ChatService:
 
-    async def ask(self, question: str) -> dict:
+    async def ask(self, question: str, request_id: str,) -> dict:
 
         result = await graph.ainvoke(
             {
                 "question": question,
+                "request_id": request_id,
+                
                 "rewritten_question": "",
                 "context": "",
                 "answer": "",

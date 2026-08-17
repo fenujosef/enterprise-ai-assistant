@@ -1,10 +1,13 @@
 from app.graph.state import GraphState
 from app.llm.groq_client import get_llm
 from app.prompts.rag_prompt import RAG_PROMPT
+from app.observability.logger import observe_node
 
 
 llm = get_llm()
 
+
+@observe_node("generate")
 def generate(state: GraphState) -> GraphState:
     """Generate the final answer."""
 

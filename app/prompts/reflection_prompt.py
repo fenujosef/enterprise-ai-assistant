@@ -33,10 +33,6 @@ Task:
 
 {question}
 
-Previous Reflection:
-
-{reflection}
-
 Execution Results:
 
 {results}

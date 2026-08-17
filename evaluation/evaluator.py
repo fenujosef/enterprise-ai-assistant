@@ -3,7 +3,9 @@ import json
 import time
 
 from app.graph.graph import graph
-from evaluation.metrics import exact_match, contains_expected
+from evaluation.metrics import exact_match, contains_expected, keyword_coverage, action_match
+from evaluation.judge import judge_answer
+from evaluation.faithfulness import judge_faithfulness
 
 
 async def evaluate_case(case: dict) -> dict:
@@ -36,6 +38,18 @@ async def evaluate_case(case: dict) -> dict:
         }
     )
 
+    judge_result = await judge_answer(
+        question=case["question"],
+        expected_answer=case["expected_answer"],
+        actual_answer=result["answer"],
+        )
+
+    faithfulness = await judge_faithfulness(
+        question=case["question"],
+        context=result.get("context", ""),
+        actual_answer=result["answer"],
+        )
+
     latency = time.perf_counter() - start_time
 
     is_exact = exact_match(
@@ -48,14 +62,36 @@ async def evaluate_case(case: dict) -> dict:
         result["answer"],
         )
 
+    context = result.get("context", "")
+
+    coverage = keyword_coverage(
+        case.get("expected_keywords", []),
+        context,
+    )
+
+    action_correct = action_match(
+        case.get("expected_action"),
+        result.get("action"),
+        )
+
     return {
         "question": case["question"],
         "expected_answer": case["expected_answer"],
         "actual_answer": result["answer"],
+        "context": result.get("context", ""),
         "category": case["category"],
         "latency_seconds": round(latency, 3),
         "exact_match": is_exact,
         "contains_expected": contains,
+        "keyword_coverage": coverage,
+        "judge_score": judge_result["score"],
+        "judge_reason": judge_result["reason"],
+        "faithfulness_score": faithfulness["score"],
+        "faithfulness_reason": faithfulness["reason"],
+        "expected_action": case.get("expected_action"),
+        "actual_action": result.get("action"),
+        "tool_name": result.get("tool_name"),
+        "action_correct": action_correct,
     }
 
 

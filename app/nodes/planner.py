@@ -14,6 +14,7 @@ def planner(state: GraphState) -> GraphState:
     prompt = PLANNER_PROMPT.invoke(
         {
             "question": state["question"],
+            "tools": state["tool_catalog"],
             "reflection": state["reflection"],
         }
     )

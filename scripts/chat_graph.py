@@ -2,6 +2,7 @@ import asyncio
 
 from app.graph.graph import graph
 from app.mcp.client import initialize_mcp, close_mcp
+from app.observability.logger import create_request_id
 
 async def main():
 
@@ -20,9 +21,12 @@ async def main():
             if question.lower() in ["exit", "quit"]:
                 break
 
+            request_id = create_request_id()
+
             result = await graph.ainvoke(
                 {
                     "question": question,
+                    "request_id": request_id,
                     "rewritten_question": "",
                     "context": "",
                     "answer": "",
@@ -45,6 +49,7 @@ async def main():
                     "reflection": "",
                     "reflection_action": "",
                     "retry_count": 0,
+                    "replan_count": 0,
                 }
             )
 

@@ -8,6 +8,7 @@ from app.prompts.reflection_prompt import REFLECTION_PROMPT
 
 llm = get_llm()
 
+
 def reflection(state: GraphState) -> GraphState:
 
     prompt = REFLECTION_PROMPT.invoke(
@@ -19,7 +20,15 @@ def reflection(state: GraphState) -> GraphState:
 
     response = llm.invoke(prompt)
 
-    data = json.loads(response.content)
+    content = response.content.strip()
+
+    if content.startswith("```json"):
+        content = content[len("```json"):].strip()
+
+    if content.endswith("```"):
+        content = content[:-3].strip()
+
+    data = json.loads(content)
 
     decision = ReflectionDecision.model_validate(data)
 
@@ -27,6 +36,9 @@ def reflection(state: GraphState) -> GraphState:
     state["reflection_action"] = decision.action
 
     if decision.action == "retry":
-        state["retry_count"] += 1
+        state["retry_count"] +=1
+
+    elif decision.action == "replan":
+        state["replan_count"] +=1
 
     return state

@@ -6,6 +6,9 @@ from fastapi import APIRouter
 
 from app.api.schemas import ChatRequest, ChatResponse
 from app.services.chat_service import ChatService
+from app.observability.logger import create_request_id
+from app.guardrails.input_guard import validate_input
+from app.guardrails.injection import (validate_against_injection,)
 
 
 router = APIRouter()
@@ -15,8 +18,19 @@ chat_service = ChatService()
 @router.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
 
-    result = await chat_service.ask(
+    request_id = create_request_id()
+
+    question = validate_input(
         request.question
+        )
+
+    question = validate_against_injection(
+        question
+        )
+
+    result = await chat_service.ask(
+        question,
+        request_id=request_id,
     )
 
     return ChatResponse(

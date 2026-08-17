@@ -33,7 +33,7 @@ def route_after_reflection(state):
 
     action = state["reflection_action"]
 
-    if action == "replan":
+    if action == "replan" and state["replan_count"] < 2:
         return "replan"
 
     if action == "retry" and state["retry_count"] < 2:

@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class PlanStep(BaseModel):
     step: int
     action: str
-    tool: str
+    tool: str | None = None
     input: str
 
 

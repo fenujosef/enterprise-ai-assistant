@@ -2,12 +2,15 @@ from app.graph.state import GraphState
 from app.retriever.vector_store import get_vector_store
 from app.retriever.hybrid_retriever import HybridRetriever
 from app.retriever.reranker import Reranker
+from app.observability.logger import observe_node
 
 
 vector_store = get_vector_store()
 retriever = HybridRetriever()
 reranker = Reranker()
 
+
+@observe_node("retrieve")
 def retrieve(state: GraphState) -> GraphState:
     """Retrieve relevant document chunks."""
 
