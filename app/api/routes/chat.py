@@ -8,7 +8,8 @@ from app.api.schemas import ChatRequest, ChatResponse
 from app.services.chat_service import ChatService
 from app.observability.logger import create_request_id
 from app.guardrails.input_guard import validate_input
-from app.guardrails.injection import (validate_against_injection,)
+from app.guardrails.injection import validate_against_injection
+from app.guardrails.pii import redact_input_pii
 
 
 router = APIRouter()
@@ -27,6 +28,12 @@ async def chat(request: ChatRequest):
     question = validate_against_injection(
         question
         )
+
+    question = redact_input_pii(
+        question
+        )
+
+    print(question)
 
     result = await chat_service.ask(
         question,
