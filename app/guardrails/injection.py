@@ -9,10 +9,23 @@ INJECTION_PATTERNS = [
     r"ignore\s+(all\s+)?prior\s+instructions",
     r"disregard\s+(all\s+)?previous\s+instructions",
     r"forget\s+(all\s+)?previous\s+instructions",
+
     r"reveal\s+(the\s+)?system\s+prompt",
     r"show\s+(me\s+)?(the\s+)?system\s+prompt",
     r"print\s+(the\s+)?system\s+prompt",
     r"reveal\s+your\s+instructions",
+    
+    # System prompt / instruction extraction
+    r"show\s+me\s+.*hidden\s+instructions",
+    r"reveal\s+.*hidden\s+instructions",
+    r"tell\s+me\s+.*hidden\s+instructions",
+    r"show\s+.*internal\s+instructions",
+    r"reveal\s+.*internal\s+instructions",
+
+    r"what\s+are\s+your\s+system\s+instructions",
+    r"what\s+are\s+your\s+hidden\s+instructions",
+    r"what\s+instructions\s+were\s+you\s+given",
+
     r"bypass\s+(the\s+)?security",
     r"disable\s+(the\s+)?security",
 ]

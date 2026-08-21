@@ -33,8 +33,6 @@ async def chat(request: ChatRequest):
         question
         )
 
-    print(question)
-
     result = await chat_service.ask(
         question,
         request_id=request_id,

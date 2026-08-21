@@ -23,3 +23,6 @@ def redact_pii(text: str) -> str:
 # Update the changes in this function
 def redact_input_pii(text: str) -> str:
     return redact_pii(text)
+
+def redact_output_pii(text: str) -> str:
+    return redact_pii(text)

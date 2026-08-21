@@ -44,6 +44,13 @@ class Settings(BaseSettings):
         alias="CHUNK_OVERLAP"
     )
 
+    redis_url: str = Field(
+    default="redis://redis:6379/0",
+    alias="REDIS_URL"
+    )
+
+    environment: str = "development"
+
 
 @lru_cache
 def get_settings() -> Settings:

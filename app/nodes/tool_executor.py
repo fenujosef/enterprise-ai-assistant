@@ -4,12 +4,15 @@ from app.mcp.client import call_mcp_tool
 #from app.mcp.tool_executor import execute_mcp_tool
 from app.mcp.utils import extract_text
 from app.observability.logger import observe_node
+from app.guardrails.tool_guard import authorize_tool
 
 
 @observe_node("tool_executor")
 async def tool_executor(state: GraphState) -> GraphState:
 
     tool_name = state["tool_name"]
+
+    authorize_tool(tool_name)
 
     if tool_name in TOOLS:
 
