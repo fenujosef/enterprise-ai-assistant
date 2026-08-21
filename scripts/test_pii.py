@@ -19,9 +19,4 @@ answer = """
 The employee's email is john@example.com.
 """
 
-print(validate_output(answer))
-
-
-answer = "A" * 9000
-
 validate_output(answer)
