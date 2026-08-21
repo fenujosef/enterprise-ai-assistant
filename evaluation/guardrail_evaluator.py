@@ -5,6 +5,7 @@ from app.guardrails.tool_guard import authorize_tool
 from app.guardrails.input_guard import GuardrailViolation, validate_input
 from app.guardrails.injection import validate_against_injection
 from app.guardrails.pii import redact_input_pii
+from app.guardrails.output_guard import validate_output
 
 
 def evaluate_case(case):
@@ -81,6 +82,36 @@ def test_tool_authorization():
             print(
                 f"PASS | denied tool blocked | {tool}"
             )
+
+
+def evaluate_output_case(case):
+
+    name = case["name"]
+    text = case["output"]
+    expected = case["expected_action"]
+
+    if name == "oversized_output":
+        text = "A" * 9000
+
+    try:
+
+        result = validate_output(text)
+
+        if result != text:
+            actual = "redact"
+        else:
+            actual = "allow"
+
+    except GuardrailViolation:
+
+        actual = "block"
+
+    return {
+        "name": name,
+        "expected": expected,
+        "actual": actual,
+        "passed": actual == expected,
+    }
 
 
 
